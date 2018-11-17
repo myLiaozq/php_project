@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>开饭啦</title>
+    <link rel="stylesheet" href="css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/kaifanla.css"/>
+</head>
+<body>
+
+	<div id="box">
+		<input type="button" @click="post()" value="点我异步获取数据(Get)">
+	</div>
+
+	<!-- <?php
+		$to = "245822113@qq.com";         // 邮件接收者
+		$subject = "参数邮件";                // 邮件标题
+		$message = "Hello! 这是邮件的内容。";  // 邮件正文
+		$from = "someonelse@example.com";   // 邮件发送者
+		$headers = "From:" . $from;         // 头部信息设置
+		mail($to,$subject,$message,$headers);
+		echo "邮件已发送";
+	?> -->
+
+<script src="js/jquery-1.11.3.js"></script>
+<script src="js/vue.min.js"></script>
+<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+<script src="js/vue-main.js"></script>
+<script type="text/javascript">
+	$.ajax({
+		url: 'data/dish_getbypage.php',
+		type: 'POST',
+		dataType: 'json',
+		data: {},
+	})
+	.done(function(data) {
+		console.log("success");
+		console.log(data);
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	});
+	
+    // window.onload = function(){
+    //     var vm = new Vue({
+    //             el:'#box',
+    //             data:{
+    //                 msg:'Hello World!',
+    //             },
+    //             methods:{
+    //                 post:function(){
+    //                     //发送 post 请求
+    //                     this.$http.post('data/dish_getbypage.php',{start:"0",url:"http://www.runoob.com"},{emulateJSON:true}).then(function(res){
+    //                         console.log(res.bodyText);    
+    //                     },function(res){
+    //                         console.log(res.status);
+    //                     });
+    //                 }
+    //             }
+    //         });
+    // }
+
+</script>
+</body>
+</html>

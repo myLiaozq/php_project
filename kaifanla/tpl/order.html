@@ -1,0 +1,48 @@
+<div ng-include="'tpl/include/header.html'"></div>
+<div class="container">
+    <div class="alert alert-info">
+
+
+        <form ng-hide="msgSuccess || msgError">
+            <!-- 收货人-->
+            <div class="form-group">
+                <label for="user">收货人</label>
+                <input class="form-control" type="text" id="user" ng-model="user.user_name"/>
+            </div>
+
+            <!-- 选择性别-->
+            <div class="form-group">
+                <label>性别</label>
+
+                <div class="radio-inline">
+                    <label>
+                        <input ng-model="user.sex" type="radio" name="sex" value="1"/>男
+                    </label>
+                </div>
+                <div class="radio-inline">
+                    <label>
+                        <input ng-model="user.sex"type="radio" name="sex" value="2"/>女
+                    </label>
+                </div>
+            </div>
+
+            <!-- 电话-->
+            <div class="form-group">
+                <label for="phone">电话</label>
+                <input ng-model="user.phone" class="form-control" id="phone" type="text"/>
+            </div>
+
+            <!-- 地址-->
+            <div class="form-group">
+                <label for="address">收货地址</label>
+                <textarea ng-model="user.address" class="form-control" name="" id="address"></textarea>
+            </div>
+
+            <input ng-click='submitOrder()' class="btn btn-success btn-block" type="button" value="提交订单"/>
+        </form>
+        <div ng-show='msgSuccess' class="alert alert-success">{{msgSuccess}}</div>
+        <div ng-show='msgError' class="alert alert-danger">{{msgError}}</div>
+    </div>
+
+</div>
+<div ng-include="'tpl/include/footer.html'"></div>
