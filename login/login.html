@@ -17,7 +17,6 @@
     	$('.js-login').click(function(event) {
     		var nameVal = $.trim($('.name-input').val());
     		var pwdVal = $.trim($('.pwd-input').val());
-
     		if(nameVal!='' && pwdVal!=''){
     			$.ajax({
     				url: 'data/login.php',
@@ -43,11 +42,9 @@
     			alert("用户名或密码不能为空");
     		}
     	});
-
     	$('.js-signup').click(function(event) {
     		var nameVal = $.trim($('.name-input').val());
     		var pwdVal = $.trim($('.pwd-input').val());
-
     		if(nameVal!='' && pwdVal!=''){
     			$.ajax({
     				url: 'data/signup.php',
@@ -57,8 +54,11 @@
     				success: function(data){
     					console.log(data);
 	    				switch(data.code){
+	    					case 0:
+								alert('用户名已被注册！');
+								break;
 							case 1:
-								alert('登录成功');
+								alert('注册成功！');
 								break;
 							case 2:
 								alert("用户或密码不正确！");

@@ -3,7 +3,6 @@
 	$dsn = 'mysql:host=localhost;port=3306;dbname=userinfo;';
 	$db_username = "root";
 	$db_password = "123";
-
 	try {
 	    $conn = new PDO($dsn, $db_username, $db_password);
 	    // echo '连接成功' . '</br>';
