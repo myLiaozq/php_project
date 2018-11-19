@@ -6,7 +6,7 @@ include('pdo.php');
 require_once(__DIR__.'/lib/Db.php');
 
 $db = new Db();
-$res = $db->table('article')->where(array('id'=>5,'title'=>'PHP编程'))->item();
+$res = $db->table('article')->field('id,title')->order('id desc')->where('id>0')->lists();
 
 print_r($res);
 
