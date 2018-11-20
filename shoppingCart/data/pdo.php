@@ -8,6 +8,7 @@
 	    // echo '连接成功' . '</br>';
 	    // 设置 PDO 错误模式，用于抛出异常
 	    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	    $conn->query("set names 'utf8'");
 	}
 	catch(PDOException $e){
 	    echo $e->getMessage();

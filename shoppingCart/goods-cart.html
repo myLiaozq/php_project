@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>goods</title>
+	<style type="text/css">
+		*{
+			box-sizing: border-box;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		table,.totle{
+			width: 800px;
+		    margin: 60px auto;
+		    text-align: center;
+		}
+	</style>
+</head>
+<body>
+	<div class="fff"></div>
+	<table border="1" cellspacing="0" cellpadding="0">
+		<thead>
+			<tr bgcolor="#87ceeb">
+			    <th width="20%">商品ID</th>
+			    <th width="35%" height="30">商品名称</th>
+			    <th width="25%">购买数量</th>
+			    <th width="15%">价格</th>
+			    <th width="5%">操作</th>
+			</tr>
+		</thead>
+        <tbody class="content">
+           
+        </tbody>
+    </table>
+    <div class="totle">
+    	<p>
+    	    总价格:<span class="totle-price"></span><a href="">下一步</a>  <a href="">清空购物车</a>
+    	</p>
+    </div>
+	<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
+	<script type="text/javascript">
+		$.ajax({
+	        url:"data/shoppingCart.php?a=buyNow",
+	        type:"post",
+	        data:{},
+	        dataType:"JSON",
+	        success:function (result) {
+	        	var data = result.data;
+	        	var totlePrice = 0;
+				$.each(data,function(index, val) {
+					var $child = `
+						<tr>
+						<td height="10">${val.id}</td>
+						<td height="10">${val.title}</td>
+						<td height="10">${val.productNum}</td>
+						<td height="10">${val.salesprice}</td>
+						<td height="10"><a href="data/shoppingCart.php?a=delone&key=${val.key}" class="cancle-cart" data-key="">取消</a></td>
+						</tr>
+					`;
+					$('.content').append($child);
+					totlePrice += parseInt(val.salesprice * val.productNum);
+
+				});
+
+				$('.totle-price').html(totlePrice);
+	        },
+	        error:function(){
+	        	console.log('error');
+	        }
+	    });
+
+	    $('.content').on('click','.cancle-cart',function(){
+
+    		$.ajax({
+    	        url:"data/shoppingCart.php?a=buyNow",
+    	        type:"post",
+    	        data:{},
+    	        dataType:"JSON",
+    	        success:function (result) {
+    	        	var data = result.data;
+    	        	var totlePrice = 0;
+    				$.each(data,function(index, val) {
+    					var $child = `
+    						<tr>
+    						<td height="10">${val.id}</td>
+    						<td height="10">${val.title}</td>
+    						<td height="10">${val.productNum}</td>
+    						<td height="10">${val.salesprice}</td>
+    						<td height="10"><a href="data/shoppingCart.php?a=delone&key=${val.key}" class="cancle-cart">取消</a></td>
+    						</tr>
+    					`;
+    					$('.content').append($child);
+    					totlePrice += parseInt(val.salesprice * val.productNum);
+
+    				});
+
+    				$('.totle-price').html(totlePrice);
+    	        },
+    	        error:function(){
+    	        	console.log('error');
+    	        }
+    	    });
+	    });
+	</script>
+</body>
+</html>
