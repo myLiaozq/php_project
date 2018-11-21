@@ -37,9 +37,16 @@
 			margin-top: 20px;
 			margin-bottom: 20px;
 		}
+		.shopping-cart{
+			display: block;
+		    width: 100%;
+		    padding: 20px 60px;
+		    text-align: right;
+		}
 	</style>
 </head>
 <body>
+	<a href="goods-cart.html" class="shopping-cart">我的购物车</a>
 	<div class="container">
 		<h1>商品列表</h1>
 
@@ -65,7 +72,7 @@
 			success:function(result){
 				var data = result.data;
 				$.each(data,function(index, el) {
-					var $child = '<li><img src="'+el.picurl+'"><a href="goods-details.html?id='+el.id+'" title="查看商品详细信息">'+el.title+'</a></li>';
+					var $child = '<li><img src="'+el.picurl+'"><a href="javascript:;" title="查看商品详细信息" data-id="'+el.id+'" class="js-pruduct-details">'+el.title+'</a></li>';
 					$('.js-goods-wrap').append($child);
 				});
 			},
@@ -85,7 +92,7 @@
 					var data = result.data;
 					$('.js-goods-wrap').empty();
 					$.each(data,function(index, el) {
-						var $child = '<li><img src="'+el.picurl+'"><a href="goods-details.html?id='+el.id+'" title="查看商品详细信息">'+el.title+'</a></li>';
+						var $child = '<li><img src="'+el.picurl+'"><a href="javascript:;" title="查看商品详细信息" data-id="'+el.id+'" class="js-pruduct-details">'+el.title+'</a></li>';
 						$('.js-goods-wrap').append($child);
 					});
 				},
@@ -93,6 +100,11 @@
 					console.log("error");
 				}
 			});
+		});
+
+		$('.js-goods-wrap').on('click','.js-pruduct-details',function(){
+			var id = $(this).attr('data-id');
+			location.href='goods-details.html?id='+id+'';
 		});
 		
 	</script>

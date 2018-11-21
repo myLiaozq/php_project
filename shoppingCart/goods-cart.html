@@ -15,10 +15,21 @@
 		    margin: 60px auto;
 		    text-align: center;
 		}
+		.back-home{
+			display: block;
+		    width: 100%;
+		    padding: 20px 60px;
+		    text-align: right;
+		}
+		.totle a{
+			margin-left: 20px;
+			margin-right: 20px;
+		}
 	</style>
 </head>
 <body>
-	<div class="fff"></div>
+	<a href="javascript:;" class="back-home js-back-detail">返回详情页！</a>
+	<a href="javascript:;" class="back-home js-back-home">返回首页！</a>
 	<table border="1" cellspacing="0" cellpadding="0">
 		<thead>
 			<tr bgcolor="#87ceeb">
@@ -35,7 +46,7 @@
     </table>
     <div class="totle">
     	<p>
-    	    总价格:<span class="totle-price"></span><a href="">下一步</a>  <a href="">清空购物车</a>
+    	    总价格:<span class="totle-price"></span><a href="javascript:;" class="js-next-step">马上支付</a>  <a href="javascript:;" class="js-empty-cart">清空购物车</a>
     	</p>
     </div>
 	<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
@@ -47,23 +58,17 @@
 	        dataType:"JSON",
 	        success:function (result) {
 	        	var data = result.data;
-	        	var totlePrice = 0;
-				$.each(data,function(index, val) {
-					var $child = `
-						<tr>
-						<td height="10">${val.id}</td>
-						<td height="10">${val.title}</td>
-						<td height="10">${val.productNum}</td>
-						<td height="10">${val.salesprice}</td>
-						<td height="10"><a href="data/shoppingCart.php?a=delone&key=${val.key}" class="cancle-cart" data-key="">取消</a></td>
-						</tr>
-					`;
-					$('.content').append($child);
-					totlePrice += parseInt(val.salesprice * val.productNum);
-
-				});
-
-				$('.totle-price').html(totlePrice);
+	        	resizeCart(data);
+	        	if(data==''){
+	        		$('.content').empty();
+	        		var $child = `
+	        			<tr>
+	        			<td height="10" colspan="4">购物车空空如也！</td>
+	        			</tr>
+	        		`;
+	        		$('.content').append($child);
+	        		$('.totle-price').html('0');
+	        	}
 	        },
 	        error:function(){
 	        	console.log('error');
@@ -71,36 +76,76 @@
 	    });
 
 	    $('.content').on('click','.cancle-cart',function(){
-
+	    	var key = $(this).attr('data-key');
     		$.ajax({
-    	        url:"data/shoppingCart.php?a=buyNow",
+    	        url:"data/shoppingCart.php?a=delone&key="+key+"",
     	        type:"post",
     	        data:{},
     	        dataType:"JSON",
     	        success:function (result) {
+    	        	alert('取消成功！');
     	        	var data = result.data;
-    	        	var totlePrice = 0;
-    				$.each(data,function(index, val) {
-    					var $child = `
-    						<tr>
-    						<td height="10">${val.id}</td>
-    						<td height="10">${val.title}</td>
-    						<td height="10">${val.productNum}</td>
-    						<td height="10">${val.salesprice}</td>
-    						<td height="10"><a href="data/shoppingCart.php?a=delone&key=${val.key}" class="cancle-cart">取消</a></td>
-    						</tr>
-    					`;
-    					$('.content').append($child);
-    					totlePrice += parseInt(val.salesprice * val.productNum);
-
-    				});
-
-    				$('.totle-price').html(totlePrice);
+    	        	resizeCart(data);
     	        },
     	        error:function(){
     	        	console.log('error');
     	        }
     	    });
+	    });
+
+	    $('.js-next-step').click(function(){
+	    	alert('支付成功！');
+	    });
+
+	    $('.js-empty-cart').click(function(){
+    		$.ajax({
+    	        url:"data/shoppingCart.php?a=empty",
+    	        type:"post",
+    	        data:{},
+    	        dataType:"JSON",
+    	        success:function (result) {
+    	        	$('.content').empty();
+    	        	var $child = `
+    	        		<tr>
+    	        		<td height="10" colspan="4">购物车空空如也！</td>
+    	        		</tr>
+    	        	`;
+    	        	$('.content').append($child);
+    	        	$('.totle-price').html('0');
+    	        	alert('购物车已清空！');
+    	        },
+    	        error:function(){
+    	        	console.log('error');
+    	        }
+    	    });
+	    });
+
+	    function resizeCart(data){
+        	var totlePrice = 0;
+        	$('.content').empty();
+			$.each(data,function(index, val) {
+				var $child = `
+					<tr>
+					<td height="10">${val.id}</td>
+					<td height="10">${val.title}</td>
+					<td height="10">${val.productNum}</td>
+					<td height="10">${val.salesprice}</td>
+					<td height="10"><a href="javascript:;" class="cancle-cart" data-key="${val.key}">取消</a></td>
+					</tr>
+				`;
+				$('.content').append($child);
+				totlePrice += parseInt(val.salesprice * val.productNum);
+
+			});
+
+			$('.totle-price').html(totlePrice);
+	    }
+
+	    $('.js-back-home').click(function(event) {
+	    	location.href="goods.html";
+	    });
+	    $('.js-back-detail').click(function(event) {
+	    	location.href="goods-details.html";
 	    });
 	</script>
 </body>

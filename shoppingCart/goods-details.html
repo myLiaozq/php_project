@@ -27,7 +27,11 @@
 	</style>
 </head>
 <body>
-	<a href="goods-cart.html" class="shopping-cart">我的购物车</a>
+	<div>
+		<a href="javascript:;" class="shopping-cart js-back-home">返回首页</a>
+		<a href="javascript:;" class="shopping-cart js-shopping-cart">我的购物车</a>
+	</div>
+	
 	<div class="container">
 		<h1>商品详情</h1>
 		<div class="js-details">
@@ -94,6 +98,13 @@
 		        	console.log('error');
 		        }
 		    })
+		});
+
+		$('.js-back-home').click(function(event) {
+			location.href="goods.html";
+		});
+		$('.js-shopping-cart').click(function(event) {
+			location.href="goods-cart.html";
 		});
 
 	</script>
