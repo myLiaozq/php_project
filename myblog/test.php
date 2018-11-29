@@ -6,8 +6,12 @@ include('pdo.php');
 require_once(__DIR__.'/lib/Db.php');
 
 $db = new Db();
-$res = $db->table('article')->field('id,title')->order('id desc')->where('id>0')->lists();
+//$res = $db->table('article')->field('id,title')->order('id desc')->where('id>0')->limit(2)->lists();
 
-print_r($res);
+$data = array('cid'=>3,'title'=>'JAVA编程22','pv'=>20);
+$id = $db->table('article')->insert($data);
+
+var_dump($id);
+// print_r($res);
 
 ?>
