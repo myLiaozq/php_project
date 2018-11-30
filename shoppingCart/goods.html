@@ -11,7 +11,7 @@
 			padding: 0;
 		}
 		.container{
-			width: 600px;
+			width: 800px;
 		    margin: 60px auto;
 		}
 		.container h1{
@@ -26,24 +26,39 @@
 		.container>ul>li{
 			float: left;
 			width: 200px;
+			height: 200px;
+			margin-bottom: 20px;
 		}
 		.container>ul>li img{
 			width: 100%;
-			height: 100%;
+			height: 80%;
+		}
+		.select-wrap{
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		.shopping-cart{
+			display: block;
+		    width: 100%;
+		    padding: 20px 60px;
+		    text-align: right;
 		}
 	</style>
 </head>
 <body>
+	<a href="goods-cart.html" class="shopping-cart">我的购物车</a>
 	<div class="container">
-		<form method="get" action="">
-		<select name="gid">
-		    <option value="0">请选择商品</option>
-		    <option id="" value=""></option>
-		    <input id="select" type="submit" value="查询">
-		</select>
-		</form>
-
 		<h1>商品列表</h1>
+
+		<div class="select-wrap">
+			<select name="gid" class="select-option">
+			    <option value="0">请选择商品</option>
+			    <option value="1">电脑</option>
+			    <option value="2" selected>手机</option>
+			    <option value="3">衣服</option>
+			</select>
+		</div>
+
 		<ul class="js-goods-wrap">
 		</ul>
 	</div>
@@ -54,19 +69,42 @@
 			type: 'GET',
 			dataType: 'json',
 			data: {},
-		})
-		.done(function(result) {
-			var data = result.data;
-			$.each(data,function(index, el) {
-				var $child = '<li><img src="'+el.picurl+'"><a href="" data-id="'+el.id+'" title="查看商品详细信息">'+el.title+'</a></li>';
-				$('.js-goods-wrap').append($child);
+			success:function(result){
+				var data = result.data;
+				$.each(data,function(index, el) {
+					var $child = '<li><img src="'+el.picurl+'"><a href="javascript:;" title="查看商品详细信息" data-id="'+el.id+'" class="js-pruduct-details">'+el.title+'</a></li>';
+					$('.js-goods-wrap').append($child);
+				});
+			},
+			error:function(){
+				console.log("error");
+			}
+		});
+
+		$('.select-option').change(function(){
+			var optionVal = $(this).val();
+			$.ajax({
+				url: 'data/goods_type.php',
+				type: 'GET',
+				dataType: 'json',
+				data: {gid:optionVal},
+				success:function(result){
+					var data = result.data;
+					$('.js-goods-wrap').empty();
+					$.each(data,function(index, el) {
+						var $child = '<li><img src="'+el.picurl+'"><a href="javascript:;" title="查看商品详细信息" data-id="'+el.id+'" class="js-pruduct-details">'+el.title+'</a></li>';
+						$('.js-goods-wrap').append($child);
+					});
+				},
+				error:function(){
+					console.log("error");
+				}
 			});
-		})
-		.fail(function() {
-			console.log("error");
-		})
-		.always(function() {
-			// console.log("complete");
+		});
+
+		$('.js-goods-wrap').on('click','.js-pruduct-details',function(){
+			var id = $(this).attr('data-id');
+			location.href='goods-details.html?id='+id+'';
 		});
 		
 	</script>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <title>登录</title>  
+    <link rel="stylesheet" href="../home/css/pintuer.css">
+    <link rel="stylesheet" href="../home/css/admin.css">
+</head>
+<body>
+<div class="bg"></div>
+<div class="container">
+    <div class="line bouncein">
+        <div class="xs6 xm4 xs3-move xm4-move">
+            <div style="height:150px;"></div>
+            <div class="media media-y margin-big-bottom">           
+            </div>         
+            <!-- <form> -->
+                <div class="panel loginbox">
+                    <div class="text-center margin-big padding-big-top"><h1>后台管理中心</h1></div>
+                    <div class="panel-body" style="padding:30px; padding-bottom:10px; padding-top:10px;">
+                        <div class="form-group">
+                            <div class="field field-icon-right">
+                                <input type="text" class="input input-big js-username" name="name" placeholder="登录账号" data-validate="required:请填写账号" autocomplete="off" />
+                                <span class="icon icon-user margin-small"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="field field-icon-right">
+                                <input type="password" class="input input-big js-password" name="password" placeholder="登录密码" data-validate="required:请填写密码" />
+                                <span class="icon icon-key margin-small"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="field">
+                                <input type="text" class="input input-big js-vcode" name="vcode" placeholder="填写右侧的验证码" data-validate="required:请填写右侧的验证码" />
+                               <img src="" alt="" width="100" height="32" class="passcode js-passcode" style="height:43px;cursor:pointer;">  
+                                                       
+                            </div>
+                        </div>
+                    </div>
+                    <div style="padding:30px;"><button class="button button-block bg-main text-big input-big js-login">登录</button></div>
+                </div>
+            <!-- </form>           -->
+        </div>
+    </div>
+</div>
+<script src="../home/js/jquery.js"></script>
+<script src="../home/js/pintuer.js"></script>  
+<script>
+    $('.js-passcode').click(function(){
+        $(this).attr('src','vcode/SecurityCoder.php');
+    });
+    $('.js-passcode').click();
+    $('.js-login').click(function(event) {
+        // var $form = $(this).parents('form');
+        // $form.find('input[data-validate],textarea[data-validate],select[data-validate]').trigger("blur");
+        // var numError = $form.find('.check-error').length;
+        // if(numError){
+        //     $form.find('.check-error').first().find('input[data-validate],textarea[data-validate],select[data-validate]').first().focus().select();
+        //     return false;
+        // }
+
+        var name = $('.js-username').val();
+        var pwd = $('.js-password').val();
+        var vcode = $('.js-vcode').val();
+
+        if(name=='' || pwd=='' || vcode==''){
+            alert('用户名或密码或验证码不能为空！');
+            return;
+        }
+
+         $.ajax({
+             url: 'login.php',
+             type: 'POST',
+             dataType: 'JSON',
+             data: {'username': name,'password': pwd,'vcode': vcode},
+             success: function(data){
+                 console.log(data);
+                 switch(data.code){
+                     case 1:
+                         alert('登录成功');
+                         location.href="../home/index.html";
+                         break;
+                     case 2:
+                         alert("用户或密码不正确！");
+                         break;
+                     case 3:
+                         alert('验证码不正确');
+                         $('.vcode-img').click();
+                         break;
+                     case 4:
+                         alert("用户已经登录！");
+                         break;
+                 }
+             },
+             error: function (msg) {
+               console.log('error'+msg);
+             }
+         });
+    });
+</script>
+</body>
+</html>
