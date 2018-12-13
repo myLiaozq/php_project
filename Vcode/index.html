@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>vcode</title>
+</head>
+<body>
+	<p>验证码</p>
+	<!-- <img src="code.php" class="vcode"> -->
+	<img src="./code.php"  class="vcode-img" style="cursor:hand">
+	<script type="text/javascript" src="../jquery-1.11.3.js"></script>
+	<script type="text/javascript">
+		$('.vcode-img').click(function(event) {
+			$(this).attr('src',"code.php?nocache="+Math.random()+"");
+		});
+		// $.ajax({
+		// 	url: './code.php',
+		// 	type: 'GET',
+		// 	dataType: 'html',
+		// 	data: {},
+		// })
+		// .done(function(data) {
+		// 	console.log(data);
+		// 	$('.vcode').attr('src',data);
+		// 	console.log("success");
+		// })
+		// .fail(function() {
+		// 	console.log("error");
+		// })
+		// .always(function() {
+		// 	console.log("complete");
+		// });
+		
+	</script>
+</body>
+</html>

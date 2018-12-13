@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>send email</title>
+	<style type="text/css">
+		input::-webkit-input-placeholder {
+		  color: white;
+
+		}
+	</style>
+</head>
+<body>
+	<p>发送邮箱</p>
+	<input type="text" name="" class="send-to">
+	<p>发送标题</p>
+	<input type="text" name="" class="send-title" placeholder="发送标题">
+	<p>发送内容</p>
+	<textarea class="send-content"></textarea>
+	<button class="send-btn">开始发送</button>
+	<script type="text/javascript" src="jquery-1.11.3.js"></script>
+	<script type="text/javascript">
+		$('.send-btn').click(function(event) {
+			var email = $.trim($('.send-to').val());
+			var title = $.trim($('.send-title').val());
+			var content = $.trim($('.send-content').val());
+			$.ajax({
+				url: './sendMail.php',
+				type: 'POST',
+				dataType: 'json',
+				data: {email: email,title:title,content:content},
+			})
+			.done(function(data) {
+				console.log(data);
+				console.log("success");
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			
+		});
+	</script>
+</body>
+</html>
