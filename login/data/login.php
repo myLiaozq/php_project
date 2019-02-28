@@ -9,14 +9,14 @@
     $password = !empty($_POST['user_pwd']) ? test_input($_POST['user_pwd']) : null;//post获得用户密码单值
 
     // $sql = "SELECT * FROM user WHERE username='$username' and password='$hashpwd'";//需要执行的sql语句
-    $sql = "SELECT * FROM user WHERE username='$username'";//需要执行的sql语句
+    $sql = "SELECT * FROM user WHERE username='$username' and password='$password'";//需要执行的sql语句
     $result = $conn->query($sql);//查询
     $pwd = $result->fetch(); //获取
-    $hashpwd = $pwd['password'];
+    // $hashpwd = $pwd['password'];
 
-    if (password_verify($password, $hashpwd)) { //验证密码
+    // if (password_verify($password, $pwd)) { //验证密码
 
-    // if($result && $result->rowCount()){//判断结果集对象是否存在,并且结果集数量是否大于0,也就是说是否存在数据
+    if($result && $result->rowCount()){//判断结果集对象是否存在,并且结果集数量是否大于0,也就是说是否存在数据
     	//rowCount()是结果集中的一个方法，可以返回当前结果集中的记录条数
     	
     	$result->setFetchMode(PDO::FETCH_ASSOC);//设置结果集的读取方式，这里用的是关联的方式进行读取

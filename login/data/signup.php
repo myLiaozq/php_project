@@ -9,7 +9,7 @@
     $password = !empty($_POST['user_pwd']) ? test_input($_POST['user_pwd']) : null;//post获得用户密码单值
 
     //密码加密
-    $hashpwd = password_hash($password, PASSWORD_DEFAULT);
+    // $hashpwd = password_hash($password, PASSWORD_DEFAULT);
 
     //拿到数据后去库里查询,用户名是否已被注册过
     $result = $conn->query("SELECT * FROM user WHERE username='$username'");
@@ -18,8 +18,8 @@
         exit;
     }else{
         //产生一个随机五位数做用户id，先不考虑用户id是否已经存在
-        $userid = rand(9,999999);
-        $sql = "INSERT INTO user(id,username,password) values($userid,'$username','$hashpwd')";//需要执行的sql语句
+        // $userid = rand(9,999999);
+        $sql = "INSERT INTO user(username,password) values('$username','$password')";//需要执行的sql语句
         $result2 = $conn->query($sql);
         if($result2 && $result2->rowCount()){
             $suc_json = array('code'=>1,'message'=>'注册成功');

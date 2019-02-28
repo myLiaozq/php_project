@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<form id="sc" action="portrait.php" target="hidden_frame" method="post" enctype="multipart/form-data">
+	<div id="yl" style="margin-left:0px; width:144px; height:170px;border:1px solid #ccc; background-size:144px 170px; background-image:url(images/8-1.jpg)">
+		<input type="file" name="file" style="width:144px; height:170px; float:left; opacity:0;" width="146" onchange="document.getElementById('sc').submit()"/>
+		<img id="pic" style="display:none"/>
+	</div>
+	<input type="button" value="保存"/>
+</form>
+
+</body>
+<script type="text/javascript">
+//回调函数
+function showimg(aa){
+    var l = document.getElementById("yl");
+    var p = document.getElementById("pic");
+    
+    l.style.backgroundImage = "url("+aa+")";
+    p.setAttribute("src",aa);
+}
+</script>
+</html>
